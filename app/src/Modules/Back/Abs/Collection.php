@@ -7,10 +7,9 @@
  * @author    Paul Shunkow
  * @copyright 2014 Paul Shunkow
  */
-namespace BO\Abs;
+namespace Modules\Back\Abs;
 
-use \BO\Abs\Model as Model;
-use \System\Libs\Object as Object;
+use \System\Abs\Object as Object;
 
 abstract class Collection extends Object implements \Iterator
 {
@@ -93,6 +92,23 @@ abstract class Collection extends Object implements \Iterator
         }
         $this->_loaded(true);
         return $this;
+    }
+
+    public function setQueryConditions($conditions)
+    {
+        if (is_array($conditions)) {
+            $this->_queryConditions = $conditions;
+        } else {
+            throw new \Exception('Wrong conditions format!');
+        }
+    }
+
+    public function setIncludedFields($fields){
+        if (is_array($fields)) {
+            $this->_includedFields = $fields;
+        } else {
+            throw new \Exception('Wrong included fields format!');
+        }
     }
 
     /**

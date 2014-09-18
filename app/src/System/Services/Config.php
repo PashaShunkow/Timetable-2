@@ -13,8 +13,6 @@ use System\Abs\Service as Service;
 
 class Config extends Service
 {
-    protected $_configs = array();
-
     /**
      * Return part of configs array if exist
      *
@@ -48,6 +46,7 @@ class Config extends Service
     {
         $_entityConfigs = $this->_parseConfig('entities');
         $this->_configs['Entities'] = $_entityConfigs;
+        $this->_configs[\App::S_BFCONNECTOR] = $_entityConfigs;
     }
 
     /**
@@ -58,7 +57,7 @@ class Config extends Service
     protected function _parseRouterConfigs()
     {
         $_routesConfigs = $this->_parseConfig('routes');
-        $this->_configs['Router'] = $_routesConfigs;
+        $this->_configs[\App::S_ROUTER] = $_routesConfigs;
     }
 
     /**

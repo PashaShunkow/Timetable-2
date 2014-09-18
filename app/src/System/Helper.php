@@ -9,16 +9,43 @@
  */
 namespace System;
 
-use System\Libs\Object;
+use System\Abs\Object;
 
 class Helper extends Object
 {
+    const S_REQUEST = 'Request';
+    const S_DBADAPTER = 'DbAdapter';
+
+    /**
+     * Array of system services
+     *
+     * @var array
+     */
+    protected $_services = array(
+        self::S_REQUEST => null,
+        self::S_DBADAPTER => null
+    );
+
     /**
      * Path to application base dir
      *
      * @var string
      */
     static private $_appRoot;
+
+    public function __construct(){
+        $this->_initServices();
+    }
+
+    protected function _initServices(){
+        foreach ($this->_services as $name => $service) {
+            if ($service == null) {
+                $class = 'System\\Services\\' . $name;
+                $service = new $class();
+                $this->_services[$name] = $service;
+            }
+        }
+    }
 
     /**
      * Return base app dir
@@ -81,5 +108,21 @@ class Helper extends Object
     {
         $outArray = json_decode($inputString, $likeArray);
         return $outArray;
+    }
+
+    /**
+     * Return request object
+     *
+     * @return \System\Services\DbAdapter
+     */
+    public function getRequest(){
+        return $this->_services[self::S_REQUEST];
+    }
+
+    /** Return db adapter
+     * @return mixed
+     */
+    public function getDbAdapter(){
+        return $this->_services[self::S_DBADAPTER];
     }
 }

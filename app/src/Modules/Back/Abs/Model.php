@@ -7,9 +7,9 @@
  * @author    Paul Shunkow
  * @copyright 2014 Paul Shunkow
  */
-namespace BO\Abs;
+namespace Modules\Back\Abs;
 
-use \System\Libs\Object as Object;
+use \System\Abs\Object as Object;
 use \System\Services\DbAdapter as DbAdapter;
 
 abstract class Model extends Object

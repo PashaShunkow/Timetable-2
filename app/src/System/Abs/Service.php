@@ -14,6 +14,8 @@ use System\Helper as Helper;
 
 abstract class Service {
 
+    protected $_configs = array();
+
     /**
      * System helper
      *
@@ -30,6 +32,7 @@ abstract class Service {
     public function __construct(Helper $helper, $configs = array())
     {
         $this->_helper = $helper;
+        $this->_configs = $configs;
         $this->_init();
     }
 
@@ -47,6 +50,6 @@ abstract class Service {
      */
     protected function _init()
     {
-
+        return true;
     }
 }

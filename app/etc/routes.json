@@ -1,6 +1,6 @@
 {
-    "editForm": [
-        "form",
-        "list"
-    ]
+    "editForm": {
+        "form": "model",
+        "list": "collection"
+    }
 }

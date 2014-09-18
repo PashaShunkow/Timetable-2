@@ -16,9 +16,9 @@ class Autoloader
      */
     static public function autoload($class)
     {
-        $classFilePath  = \App::getBaseDir();
+        $classFilePath  = realpath(dirname(''));
         $classPathParts = explode('\\', $class);
-        $classFilePath .= DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'code';
+        $classFilePath .= DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'src';
 
 
         for ($i = 0; $i < count($classPathParts); $i++) {

@@ -3,7 +3,7 @@
 class App {
 
     const S_CONFIG = 'Config';
-    const S_VMCONNECTOR = 'VMConnector';
+    const S_BFCONNECTOR = 'BFConnector';
     const S_ROUTER = 'Router';
 
     /**
@@ -34,8 +34,8 @@ class App {
      */
     protected $_services = array(
         self::S_CONFIG => null,
-        self::S_ROUTER => null
-        //'VMConnector' => null,
+        self::S_ROUTER => null,
+        self::S_BFCONNECTOR => null,
     );
 
 
@@ -51,12 +51,16 @@ class App {
         if (!self::$_app) {
             self::$_app = new self();
         }
-        self::$_app->_init();
-        $conf = self::$_app->getService(self::S_CONFIG);
-        $r=0;
-        //self::$_app->getService('Router')->encodeRequest(self::$_app);
-//        self::$_app->getService('VMConnector')->processRequest();
-//        self::$_app->getService('VMConnector')->renderHtml();
+
+        try {
+            $app = self::$_app;
+            $app->_init();
+            $requestData = $app->getService(self::S_ROUTER)->decodeRequest();
+            $app->getService(self::S_BFCONNECTOR)->processRequest($requestData);
+            $app->getService(self::S_BFCONNECTOR)->output();
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
     }
 
     /**
@@ -73,7 +77,7 @@ class App {
      * Register system autoloader
      */
     protected function _registerAutoloader(){
-        require_once 'code' . DIRECTORY_SEPARATOR . 'System' . DIRECTORY_SEPARATOR . 'Libs' . DIRECTORY_SEPARATOR . 'Autoloader.php';
+        require_once 'src' . DIRECTORY_SEPARATOR . 'System' . DIRECTORY_SEPARATOR . 'Autoloader.php';
         spl_autoload_register('Autoloader::autoload');
     }
 
@@ -111,7 +115,7 @@ class App {
         foreach ($this->_services as $name => $service) {
             if ($service == null) {
                 $class = 'System\\Services\\' . $name;
-                $service = new $class($this->_getSystemHelper(), $this->getService('Config')->getConfig($name));
+                $service = new $class($this->_getSystemHelper(), $this->getService(self::S_CONFIG)->getConfig($name));
                 $this->_services[$name] = $service;
             }
         }
@@ -122,12 +126,13 @@ class App {
      *
      * @param string $serviceName Service name
      * @return mixed
+     * @throws Exception
      */
     public function getService($serviceName){
         if(isset($this->_services[$serviceName]) && $this->_services[$serviceName]){
             return $this->_services[$serviceName];
         }else{
-            die('Cant provide service ' . $serviceName);
+            throw new \Exception('Cant provide service ' . $serviceName);
         }
     }
 }

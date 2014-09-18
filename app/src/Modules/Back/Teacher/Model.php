@@ -1,8 +1,8 @@
 <?php
 
-namespace BO\Entities\Teacher;
+namespace Modules\Back\Teacher;
 
-use BO\Abs\Model as AbstractModel;
+use Modules\Back\Abs\Model as AbstractModel;
 
 class Model extends AbstractModel
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace System\Libs;
+namespace System\Abs;
 
 class Object
 {

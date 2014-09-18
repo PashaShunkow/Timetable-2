@@ -1,8 +1,8 @@
 <?php
 
-namespace BO\Entities\Teacher;
+namespace Modules\Back\Teacher;
 
-use BO\Abs\Collection as AbstractCollection;
+use Modules\Back\Abs\Collection as AbstractCollection;
 
 class Collection extends AbstractCollection
 {

@@ -38,31 +38,30 @@
 #
 ###### Necessary redirects and rewrites for search engines #####
 #
-#<IfModule mod_rewrite.c>
-#	#RewriteCond %{HTTP_HOST} !^www.yourdomain.com$ [NC]
-#	#RewriteRule ^(.*)$ http://www.yourdomain.com/$1 [R=301,L]
-#
-#	##### Redirect away from /index.php and /home
-#	##### Warning: This index.php rewrite will prevent Magento
-#	##### Connect from working. Simply comment out the
-#	##### following two lines of code when using Connect.
-#	##### Please note - http://www. if not using www simply use http://
-#
-#	RewriteCond %{THE_REQUEST} ^.*/index.php
-#	RewriteRule ^(.*)index.php$ http://www.yourdomain.com/$1 [R=301,L]
-#
-#  	##### Please note - http://www. if not using www simply use http://
-#	redirect 301 /home http://www.yourdomain.com
-#
-#	Options +FollowSymLinks
-#	RewriteEngine on
-#	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
-#	RewriteCond %{REQUEST_URI} !^/(media|skin|js)/
-#	RewriteCond %{REQUEST_FILENAME} !-f
-#	RewriteCond %{REQUEST_FILENAME} !-d
-#	RewriteCond %{REQUEST_FILENAME} !-l
-#	RewriteRule .* index.php [L]
-#</IfModule>
+<IfModule mod_rewrite.c>
+	#RewriteCond %{HTTP_HOST} !^www.yourdomain.com$ [NC]
+	#RewriteRule ^(.*)$ http://www.yourdomain.com/$1 [R=301,L]
+
+	##### Redirect away from /index.php and /home
+	##### Warning: This index.php rewrite will prevent Magento
+	##### Connect from working. Simply comment out the
+	##### following two lines of code when using Connect.
+	##### Please note - http://www. if not using www simply use http://
+
+	RewriteCond %{THE_REQUEST} ^.*/index.php
+	RewriteRule ^(.*)index.php$ http://table/$1 [R=301,L]
+
+  	##### Please note - http://www. if not using www simply use http://
+
+	Options +FollowSymLinks
+	RewriteEngine on
+	RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+	RewriteCond %{REQUEST_URI} !^/(media|skin|js)/
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-l
+	RewriteRule .* index.php [L]
+</IfModule>
 #
 #
 ###### mod_deflate compresses your output to lower the file size being sent to the client #####

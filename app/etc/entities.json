@@ -1,6 +1,13 @@
 {
-    "Teacher": [
-        "firstname",
-        "lastname"
-    ]
+    "Teacher": {
+        "form": [
+            "firstname",
+            "lastname",
+            "age"
+        ],
+        "list": [
+            "firstname",
+            "lastname"
+        ]
+    }
 }
