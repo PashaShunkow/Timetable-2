@@ -9,7 +9,7 @@
  */
 namespace System;
 
-use System\Lib\Object;
+use System\Libs\Object;
 
 class Helper extends Object
 {

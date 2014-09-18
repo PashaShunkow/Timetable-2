@@ -10,7 +10,7 @@
 namespace BO\Abs;
 
 use \BO\Abs\Model as Model;
-use \System\Lib\Object as Object;
+use \System\Libs\Object as Object;
 
 abstract class Collection extends Object implements \Iterator
 {

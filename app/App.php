@@ -73,7 +73,7 @@ class App {
      * Register system autoloader
      */
     protected function _registerAutoloader(){
-        require_once 'code' . DIRECTORY_SEPARATOR . 'System' . DIRECTORY_SEPARATOR . 'Lib' . DIRECTORY_SEPARATOR . 'Autoloader.php';
+        require_once 'code' . DIRECTORY_SEPARATOR . 'System' . DIRECTORY_SEPARATOR . 'Libs' . DIRECTORY_SEPARATOR . 'Autoloader.php';
         spl_autoload_register('Autoloader::autoload');
     }
 

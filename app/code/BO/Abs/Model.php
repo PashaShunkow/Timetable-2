@@ -9,7 +9,7 @@
  */
 namespace BO\Abs;
 
-use \System\Lib\Object as Object;
+use \System\Libs\Object as Object;
 use \System\Services\DbAdapter as DbAdapter;
 
 abstract class Model extends Object
