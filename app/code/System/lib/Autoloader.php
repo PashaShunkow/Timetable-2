@@ -7,7 +7,6 @@
  * @author    Paul Shunkow
  * @copyright 2014 Paul Shunkow
  */
-
 class Autoloader
 {
     /**
@@ -17,7 +16,7 @@ class Autoloader
      */
     static public function autoload($class)
     {
-        $classFilePath  = realpath(dirname(''));
+        $classFilePath  = \App::getBaseDir();
         $classPathParts = explode('\\', $class);
         $classFilePath .= DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'code';
 
@@ -31,7 +30,7 @@ class Autoloader
         if (is_file($classFilePath)) {
             require_once $classFilePath;
         }else{
-            //sddsd
+
         }
     }
 }
