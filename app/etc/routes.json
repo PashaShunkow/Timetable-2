@@ -1,8 +1,6 @@
 {
-    "routes": {
-        "editForm": [
-            "form",
-            "list"
-        ]
-    }
+    "editForm": [
+        "form",
+        "list"
+    ]
 }

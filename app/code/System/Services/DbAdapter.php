@@ -7,7 +7,7 @@
  * @author    Paul Shunkow
  * @copyright 2014 Paul Shunkow
  */
-namespace System;
+namespace System\Services;
 
 class DbAdapter extends \MongoClient
 {

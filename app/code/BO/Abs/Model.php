@@ -9,26 +9,17 @@
  */
 namespace BO\Abs;
 
-use \System\Object as Object;
-use \System\DbAdapter as DbAdapter;
-use BO\Abs\Collection as Collection;
+use \System\Lib\Object as Object;
+use \System\Services\DbAdapter as DbAdapter;
 
 abstract class Model extends Object
 {
     /**
      * Db Adapter object
      *
-     * @var \System\DbAdapter
+     * @var \System\Services\DbAdapter
      */
     protected $_dbAdapter;
-
-
-    /**
-     * Model collection
-     *
-     * @var \BO\Abs\Collection
-     */
-    protected $_collection;
 
     /**
      * Name of models entity
@@ -50,10 +41,9 @@ abstract class Model extends Object
      * @param DbAdapter  $dbAdapter  Db Adapter object
      * @param Collection $collection Db Adapter object
      */
-    public function __construct(DbAdapter $dbAdapter, Collection $collection)
+    public function __construct(DbAdapter $dbAdapter)
     {
         $this->_dbAdapter = $dbAdapter;
-        $this->_collection = $collection;
     }
 
     /**
@@ -95,11 +85,6 @@ abstract class Model extends Object
         if ($this->getId()) {
             $dbAdapter->deleteOneFromCollection($this->getId(), $this->getEntityName());
         }
-    }
-
-    public function getCollection(){
-        $this->_collection->setRelatedModel($this);
-        return $this->_collection;
     }
 
     /**

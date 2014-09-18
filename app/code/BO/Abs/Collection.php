@@ -10,8 +10,7 @@
 namespace BO\Abs;
 
 use \BO\Abs\Model as Model;
-use \System\Object as Object;
-use \System\DbAdapter as DbAdapter;
+use \System\Lib\Object as Object;
 
 abstract class Collection extends Object implements \Iterator
 {
@@ -59,15 +58,27 @@ abstract class Collection extends Object implements \Iterator
     protected $_relatedModel;
 
     /**
+     * Collection status flag
+     *
+     * @var bool
+     */
+    protected $_loaded;
+
+    /**
      * Class constructor
      *
-     * @param DbAdapter $dbAdapter Db Adapter object
+     * @param Model $model Related model
      */
-    public function __construct(DbAdapter $dbAdapter){
-        $this->_dbAdapter = $dbAdapter;
+    public function __construct(Model $model){
+        $this->_relatedModel = $model;
         $this->_pointer = 0;
     }
 
+    /**
+     * Execute prepared query, create collection items based on fetched data
+     *
+     * @return $this
+     */
     public function load()
     {
         $this->_items = array();
@@ -80,14 +91,15 @@ abstract class Collection extends Object implements \Iterator
             $item = clone $this->getRelatedModel();
             $this->_items[] = $item->initModelData($doc);
         }
-        $this->setIsLoaded(true);
+        $this->_loaded(true);
         return $this;
     }
 
-    public function setRelatedModel(Model $model){
-        $this->_relatedModel = $model;
-    }
-
+    /**
+     * Returns object of related model
+     *
+     * @return Model
+     */
     public function getRelatedModel(){
         return $this->_relatedModel;
     }
@@ -126,7 +138,16 @@ abstract class Collection extends Object implements \Iterator
      */
     protected function _isLoaded()
     {
-        return $this->getIsLoaded();
+        return $this->_loaded;
+    }
+
+    /**
+     * Set collection load status true/false
+     *
+     * @param bool $value Collection status
+     */
+    protected function _loaded($value){
+        $this->_loaded = $value;
     }
 
     /**
@@ -142,21 +163,34 @@ abstract class Collection extends Object implements \Iterator
     /**
      * Return model bd adapter
      *
-     * @return DbAdapter
+     * @return \System\Services\DbAdapter
      */
     public function getDbAdapter()
     {
-        return $this->_dbAdapter;
+        return $this->getRelatedModel()->getDbAdapter();
     }
 
+    /**
+     * Return array of query conditions
+     *
+     * @return array
+     */
     public function getQueryConditions(){
         return $this->_queryConditions;
     }
 
+    /**
+     * Return array of included fields
+     *
+     * @return array
+     */
     public function getIncludedFields(){
         return $this->_includedFields;
     }
 
+    /**
+     * Reset inner cursor to 0
+     */
     public function rewind() {
         if (!$this->_isLoaded()) {
             $this->load();
@@ -164,18 +198,36 @@ abstract class Collection extends Object implements \Iterator
         $this->_pointer = 0;
     }
 
+    /**
+     * Return current item
+     *
+     * @return mixed
+     */
     public function current() {
         return $this->_items[$this->_pointer];
     }
 
+    /**
+     * Return current cursor position
+     *
+     * @return int|mixed
+     */
     public function key() {
         return $this->_pointer;
     }
 
+    /**
+     * Iterate cursor
+     */
     public function next() {
         ++$this->_pointer;
     }
 
+    /**
+     * Check if exist item
+     *
+     * @return bool
+     */
     public function valid() {
         return isset($this->_items[$this->_pointer]);
     }
